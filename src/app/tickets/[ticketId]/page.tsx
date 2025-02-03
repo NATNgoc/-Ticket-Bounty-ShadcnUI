@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Paths from "@/constants/paths";
 import { TicketStatus } from "@/features/ticket/type";
+import { TicketItem } from "@/features/ticket/components/ticket-item";
 
 interface TicketPageProps {
   params: {
@@ -89,6 +90,7 @@ export default async function TicketsByIdPage({ params }: TicketPageProps) {
 
   return (
     <>
+      <TicketItem ticketItem={dataTicket}></TicketItem>
       <h2 className="text-6xl font-bold tracking-tighter">
         This is some information about ticket ID: {dataTicket?.id}
       </h2>

@@ -4,13 +4,13 @@ import { cloneElement } from "react";
 type PlacerHolderProps = {
   label: string;
   icon?: React.ReactElement<any>;
-  button: any;
+  button: React.ReactElement<any>;
 };
 
 export default function PlaceHolder({
   label,
   icon = <LucideCloudAlert />,
-  button = null,
+  button = <div></div>,
 }: PlacerHolderProps) {
   return (
     <>

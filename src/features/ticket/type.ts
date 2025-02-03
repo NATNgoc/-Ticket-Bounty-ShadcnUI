@@ -3,7 +3,7 @@ export enum TicketStatus {
   NotUsed = "false",
 }
 export type Ticket = {
-  id: number;
+  id: string;
   movieId: number;
   startTime: Date;
   endTime: Date;
@@ -13,4 +13,5 @@ export type Ticket = {
 
 export type TicketItemProps = {
   ticketItem: Ticket;
+  isDetail?: false;
 };

@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <Header></Header>
         <main
-          className="p-10 motion-preset-expand min-h-screen
+          className="p-10 min-h-screen
             overflow-y-auto overflow-x-hidden
             py-24 px-8
             bg-secondary/20
