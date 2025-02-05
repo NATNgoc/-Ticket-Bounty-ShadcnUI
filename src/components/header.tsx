@@ -1,5 +1,8 @@
+import ThemeSwitcher from "@/components/theme/theme-switcher";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import Paths from "@/constants/paths";
+
 import clsx from "clsx";
 import { LucideKanban } from "lucide-react";
 import Link from "next/link";
@@ -22,18 +25,25 @@ export default function Header() {
             <h1>TicketBounty</h1>
           </Link>
         </Button>
-        <Button
-          asChild
-          variant="default"
-          size="lg"
-        >
-          <Link
-            href={Paths.TicketsPath()}
-            className="font-normal  underline text-lg motion-preset-expand"
+        <div className="flex flex-row gap-x-2 items-center">
+          <ThemeSwitcher></ThemeSwitcher>
+          <Separator
+            orientation="vertical"
+            className="w-[2px]"
+          ></Separator>
+          <Button
+            asChild
+            variant="default"
+            size="lg"
           >
-            Tickets
-          </Link>
-        </Button>
+            <Link
+              href={Paths.TicketsPath()}
+              className="font-normal  underline text-lg motion-preset-expand"
+            >
+              Tickets
+            </Link>
+          </Button>
+        </div>
       </nav>
     </header>
   );

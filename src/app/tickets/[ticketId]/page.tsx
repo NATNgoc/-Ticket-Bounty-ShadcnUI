@@ -66,31 +66,21 @@ const Status_Icons: { [key in TicketStatus]: JSX.Element } = {
   false: unDoneIcon(),
 };
 
-export default async function TicketsByIdPage({ params }: TicketPageProps) {
-  const { ticketId } = await params;
+export default function TicketsByIdPage({ params }: TicketPageProps) {
+  const { ticketId } = params;
   const dataTicket = data.find((ticket) => ticket.id + "" === ticketId);
   if (!dataTicket) {
-    return (
-      <PlaceHolder
-        label="Ticket Not Found"
-        button={
-          <>
-            <Button
-              variant="outline"
-              asChild
-              className="text-sm font-semibold"
-            >
-              <Link href={Paths.TicketsPath()}>Back to tickets page</Link>
-            </Button>
-          </>
-        }
-      />
-    );
+    throw new Error("Ticket not found");
   }
 
   return (
     <>
-      <TicketItem ticketItem={dataTicket}></TicketItem>
+      <div className="w-full flex flex-row justify-center my-5">
+        <TicketItem
+          ticketItem={dataTicket}
+          isDetail={true}
+        ></TicketItem>
+      </div>
       <h2 className="text-6xl font-bold tracking-tighter">
         This is some information about ticket ID: {dataTicket?.id}
       </h2>

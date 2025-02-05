@@ -4,7 +4,7 @@ import { cloneElement } from "react";
 type PlacerHolderProps = {
   label: string;
   icon?: React.ReactElement<any>;
-  button: React.ReactElement<any>;
+  button?: React.ReactElement<any>;
 };
 
 export default function PlaceHolder({

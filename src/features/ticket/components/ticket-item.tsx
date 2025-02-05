@@ -16,9 +16,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export function TicketItem({ ticketItem, isDetail }: TicketItemProps) {
+export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
   return (
-    <div className="flex flex-row justify-center w-full max-w-[450px]">
+    <div
+      className={clsx("flex flex-row justify-center w-full gap-x-2", {
+        "max-w-[450px]": !isDetail,
+        "max-w-[850px]": isDetail,
+      })}
+    >
       <Card>
         <CardHeader>
           <CardTitle className="flex flex-row gap-2 items-center">
@@ -37,28 +42,38 @@ export function TicketItem({ ticketItem, isDetail }: TicketItemProps) {
         <CardContent>
           <p
             className={clsx(
-              " text-gray-500 line-clamp-3 whitespace-break-spaces tracking-tighter ",
+              " text-gray-500 whitespace-break-spaces tracking-tighter",
               {
-                "line-through": ticketItem.isUsed === TicketStatus.Used,
+                "line-through":
+                  ticketItem.isUsed === TicketStatus.Used && !isDetail,
+                "line-clamp-3 ": !isDetail,
               }
             )}
           >
-            {ticketItem.description}
+            {ticketItem.description +
+              ticketItem.description +
+              ticketItem.description +
+              ticketItem.description +
+              ticketItem.description +
+              ticketItem.description +
+              ticketItem.description}
           </p>
         </CardContent>
       </Card>
-      <Button
-        asChild
-        variant="ghost"
-        className="hover:bg-transparent"
-      >
-        <Link
-          href={Paths.TicketPath(ticketItem.id + "")}
-          className="underline pl-0"
+      {!isDetail && (
+        <Button
+          asChild
+          variant="ghost"
+          className="hover:bg-transparent"
         >
-          <LucideSquareArrowOutUpRight />
-        </Link>
-      </Button>
+          <Link
+            href={Paths.TicketPath(ticketItem.id + "")}
+            className="underline pl-0"
+          >
+            <LucideSquareArrowOutUpRight />
+          </Link>
+        </Button>
+      )}
     </div>
   );
 }

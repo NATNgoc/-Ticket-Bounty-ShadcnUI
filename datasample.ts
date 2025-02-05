@@ -91,6 +91,15 @@ const dataTicketSamples: Ticket[] = [
     description:
       "Chiều nay, hãy bước vào thế giới phiêu lưu kỳ thú với những nhân vật đầy sắc thái và câu chuyện gây tò mò từ đầu đến cuối.",
   },
+  {
+    id: 11,
+    movieId: 110,
+    startTime: new Date("2023-10-03T13:00:00"),
+    endTime: new Date("2023-10-03T15:00:00"),
+    isUsed: TicketStatus.Used,
+    description:
+      "Chiều nay, hãy bước vào thế giới phiêu lưu kỳ thú với những nhân vật đầy sắc thái và câu chuyện gây tò mò từ đầu đến cuối.",
+  },
 ];
 
 export default dataTicketSamples;
