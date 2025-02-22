@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { createTicket } from "@/features/ticket/actions/create-ticket";
 import { updateTicket } from "@/features/ticket/actions/update-ticket";
 import { Ticket, ticketStatusList } from "@/features/ticket/type";
-import { LucideLoaderCircle } from "lucide-react";
+import { LucideLoader2 } from "lucide-react";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
@@ -22,16 +22,23 @@ type TicketUpsertFormProps = {
   ticket?: Ticket;
 };
 
-function SubmitButton({ lable }: { lable: string }) {
+const SubmitButton = ({ label }: { label: string }) => {
   const { pending } = useFormStatus();
 
   return (
-    <Button disabled={pending}>
-      {pending && <LucideLoaderCircle className="animate-spin" />}
-      {lable}
+    <Button
+      disabled={pending}
+      className="flex flex-row"
+    >
+      {pending && (
+        <div>
+          <LucideLoader2 className="animate-spin" />
+        </div>
+      )}
+      {label}
     </Button>
   );
-}
+};
 
 export default function TicketUpsertForm(props: TicketUpsertFormProps) {
   const { ticket } = props;
@@ -40,12 +47,12 @@ export default function TicketUpsertForm(props: TicketUpsertFormProps) {
     ? updateTicket.bind(null, ticket?.id)
     : createTicket;
 
-  const [actionState, action] = useActionState<{ message: string }, FormData>(
-    serverAction,
-    {
-      message: "",
-    }
-  );
+  const [actionState, action] = useActionState<
+    { message: string; payload?: FormData },
+    FormData
+  >(serverAction, {
+    message: "",
+  });
 
   return (
     <form action={action}>
@@ -53,14 +60,18 @@ export default function TicketUpsertForm(props: TicketUpsertFormProps) {
         {ticket && (
           <Input
             name="id"
-            defaultValue={ticket.id}
+            defaultValue={
+              (actionState.payload?.get("title") as string) ?? ticket.id
+            }
             type="hidden"
           ></Input>
         )}
         <Label htmlFor="title">Title</Label>
         <Input
           type="text"
-          defaultValue={ticket?.title}
+          defaultValue={
+            (actionState.payload?.get("title") as string) ?? ticket?.title
+          }
           id="title"
           name="title"
           placeholder="Your favorite title here💝"
@@ -68,7 +79,9 @@ export default function TicketUpsertForm(props: TicketUpsertFormProps) {
         <Label htmlFor="status">Status</Label>
         <Select
           name="status"
-          defaultValue={ticket?.status}
+          defaultValue={
+            (actionState.payload?.get("status") as string) ?? ticket?.status
+          }
         >
           <SelectTrigger id="status">
             <SelectValue placeholder="Select status's ticket"></SelectValue>
@@ -89,16 +102,15 @@ export default function TicketUpsertForm(props: TicketUpsertFormProps) {
         <Textarea
           placeholder="What's ticket about?"
           id="content"
-          defaultValue={ticket?.content}
+          defaultValue={
+            (actionState.payload?.get("content") as string) ?? ticket?.content
+          }
           name="content"
           className="h-32 overflow-y-auto"
         ></Textarea>
-        <SubmitButton lable={ticket ? "Update" : "Create"} />
-        {/* <Button disabled={isPending}>
-          {isPending && <LucideLoaderCircle className="animate-spin" />}
-          {ticket ? "Update" : "Create"}
-        </Button> */}
-        <div>{actionState.message}</div>
+        <SubmitButton label={ticket ? "Update" : "Create"} />
+
+        <div>{actionState?.message}</div>
       </div>
     </form>
 

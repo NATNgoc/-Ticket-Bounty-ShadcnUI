@@ -45,7 +45,7 @@ export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
       <Button
         asChild
         variant="outline"
-        className="max-w-10 border-[2px] border-white"
+        className="max-w-10 "
       >
         <Link
           prefetch
@@ -62,7 +62,7 @@ export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
       <Button
         asChild
         variant="outline"
-        className="max-w-10 border-[2px] border-white"
+        className="max-w-10"
       >
         <Link
           prefetch
