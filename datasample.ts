@@ -1,12 +1,12 @@
-import { Ticket, TicketStatus } from "@/features/ticket/type";
+import { Ticket2, TicketStatus2 } from "@/features/ticket/type";
 
-const dataTicketSamples: Ticket[] = [
+const dataTicketSamples: Ticket2[] = [
   {
     id: 1,
     movieId: 101,
     startTime: new Date("2023-10-01T10:00:00"),
     endTime: new Date("2023-10-01T12:00:00"),
-    isUsed: TicketStatus.NotUsed,
+    isUsed: TicketStatus2.NotUsed,
     description:
       "Trải nghiệm buổi sáng đầy thú vị với bộ phim hành động kịch tính. Đừng bỏ lỡ những cảnh quay tuyệt đẹp và những pha hành động nghẹt thở!",
   },
@@ -15,7 +15,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 102,
     startTime: new Date("2023-10-01T13:00:00"),
     endTime: new Date("2023-10-01T15:00:00"),
-    isUsed: TicketStatus.Used,
+    isUsed: TicketStatus2.Used,
     description:
       "Bạn đã tham dự một buổi chiều đong đầy cảm xúc với câu chuyện tình yêu lãng mạn, nơi mọi khán giả đều rơi lệ vì sự xúc động.",
   },
@@ -24,7 +24,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 103,
     startTime: new Date("2023-10-01T16:00:00"),
     endTime: new Date("2023-10-01T18:00:00"),
-    isUsed: TicketStatus.NotUsed,
+    isUsed: TicketStatus2.NotUsed,
     description:
       "Một bộ phim giả tưởng hoành tráng vào buổi chiều tối! Cùng lạc vào thế giới đầy màu sắc và phép thuật sẽ làm bạn ngạc nhiên.",
   },
@@ -33,7 +33,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 104,
     startTime: new Date("2023-10-01T19:00:00"),
     endTime: new Date("2023-10-01T21:00:00"),
-    isUsed: TicketStatus.Used,
+    isUsed: TicketStatus2.Used,
     description:
       "Bộ phim trinh thám gay cấn này đã giữ bạn ở mép ghế suốt hai giờ đồng hồ. Một kết thúc bất ngờ khiến ai cũng phải bàn tán.",
   },
@@ -42,7 +42,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 105,
     startTime: new Date("2023-10-02T10:00:00"),
     endTime: new Date("2023-10-02T12:00:00"),
-    isUsed: TicketStatus.NotUsed,
+    isUsed: TicketStatus2.NotUsed,
     description:
       "Hãy bắt đầu ngày mới bằng một bộ phim hoạt hình ngọt ngào, đầy sắc màu và phù hợp cho cả gia đình.",
   },
@@ -51,7 +51,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 106,
     startTime: new Date("2023-10-02T13:00:00"),
     endTime: new Date("2023-10-02T15:00:00"),
-    isUsed: TicketStatus.Used,
+    isUsed: TicketStatus2.Used,
     description:
       "Buổi chiều ấn tượng với bộ phim kinh dị lạnh sống lưng. Những khoảnh khắc hù dọa khiến bạn không thể rời mắt khỏi màn hình.",
   },
@@ -60,7 +60,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 107,
     startTime: new Date("2023-10-02T16:00:00"),
     endTime: new Date("2023-10-02T18:00:00"),
-    isUsed: TicketStatus.NotUsed,
+    isUsed: TicketStatus2.NotUsed,
     description:
       "Hãy thưởng thức một câu chuyện hài hước đầy vui nhộn và thoải mái vào buổi chiều muộn, làm tan biến mọi mệt mỏi trong ngày.",
   },
@@ -69,7 +69,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 108,
     startTime: new Date("2023-10-02T19:00:00"),
     endTime: new Date("2023-10-02T21:00:00"),
-    isUsed: TicketStatus.Used,
+    isUsed: TicketStatus2.Used,
     description:
       "Bạn đã chìm đắm trong một bộ phim khoa học viễn tưởng hấp dẫn. Hiệu ứng đặc biệt và nội dung sâu sắc làm nên buổi tối đáng nhớ.",
   },
@@ -78,7 +78,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 109,
     startTime: new Date("2023-10-03T10:00:00"),
     endTime: new Date("2023-10-03T12:00:00"),
-    isUsed: TicketStatus.NotUsed,
+    isUsed: TicketStatus2.NotUsed,
     description:
       "Hãy sẵn sàng cho một buổi sáng đầy tiếng cười với bộ phim hài hước nhẹ nhàng. Một khởi đầu hoàn hảo cho ngày mới.",
   },
@@ -87,7 +87,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 110,
     startTime: new Date("2023-10-03T13:00:00"),
     endTime: new Date("2023-10-03T15:00:00"),
-    isUsed: TicketStatus.NotUsed,
+    isUsed: TicketStatus2.NotUsed,
     description:
       "Chiều nay, hãy bước vào thế giới phiêu lưu kỳ thú với những nhân vật đầy sắc thái và câu chuyện gây tò mò từ đầu đến cuối.",
   },
@@ -96,7 +96,7 @@ const dataTicketSamples: Ticket[] = [
     movieId: 110,
     startTime: new Date("2023-10-03T13:00:00"),
     endTime: new Date("2023-10-03T15:00:00"),
-    isUsed: TicketStatus.Used,
+    isUsed: TicketStatus2.Used,
     description:
       "Chiều nay, hãy bước vào thế giới phiêu lưu kỳ thú với những nhân vật đầy sắc thái và câu chuyện gây tò mò từ đầu đến cuối.",
   },

@@ -1,22 +1,79 @@
+// "use client";
+
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Paths from "@/constants/paths";
-import { Ticket, TicketItemProps, TicketStatus } from "@/features/ticket/type";
+import { deleteTicket } from "@/features/ticket/actions/delete-ticket";
+import { TicketItemProps, ticketStatusList } from "@/features/ticket/type";
 import clsx from "clsx";
 import {
-  LucideBadgeCheck,
   LucideBadge,
+  LucideBadgeCheck,
+  LucideSettings2,
   LucideSquareArrowOutUpRight,
+  LucideTrash2,
 } from "lucide-react";
 import Link from "next/link";
 
 export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
+  const DeleteButton = () => {
+    return (
+      <form action={deleteTicket.bind(null, ticketItem.id + "")}>
+        <Button
+          variant={"destructive"}
+          className="max-w-10 "
+        >
+          <LucideTrash2></LucideTrash2>
+        </Button>
+      </form>
+    );
+    // return (
+    //   <Button
+    //     asChild
+    //     variant="ghost"
+    //     className="justify-center"
+    //   >
+    //     <Link href={Paths.TicketPath(ticketItem.id + "")}>
+    //       <LucideSquareArrowOutUpRight />
+    //     </Link>
+    //   </Button>
+    // );
+  };
+
+  const EditButton = () => {
+    return (
+      <Button
+        asChild
+        variant="outline"
+        className="max-w-10 border-[2px] border-white"
+      >
+        <Link
+          prefetch
+          href={Paths.TicketEditPath(ticketItem.id + "")}
+        >
+          <LucideSettings2 />
+        </Link>
+      </Button>
+    );
+  };
+
+  const DetailButton = () => {
+    return (
+      <Button
+        asChild
+        variant="outline"
+        className="max-w-10 border-[2px] border-white"
+      >
+        <Link
+          prefetch
+          href={Paths.TicketPath(ticketItem.id + "")}
+        >
+          <LucideSquareArrowOutUpRight />
+        </Link>
+      </Button>
+    );
+  };
+
   return (
     <div
       className={clsx("flex flex-row justify-center w-full gap-x-2", {
@@ -28,13 +85,13 @@ export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
         <CardHeader>
           <CardTitle className="flex flex-row gap-2 items-center">
             <span>
-              {ticketItem.isUsed === TicketStatus.Used ? (
-                <LucideBadgeCheck />
-              ) : (
+              {ticketItem.status === ticketStatusList[0] ? (
                 <LucideBadge />
+              ) : (
+                <LucideBadgeCheck />
               )}
             </span>
-            <span className="text-2xl font-bold tracking-tighter">
+            <span className="text-2xl font-bold tracking-tighter line-clamp-1">
               Ticket ID: {ticketItem.id}
             </span>
           </CardTitle>
@@ -42,38 +99,28 @@ export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
         <CardContent>
           <p
             className={clsx(
-              " text-gray-500 whitespace-break-spaces tracking-tighter",
+              " text-gray-500 whitespace-break-spaces tracking-tighter break-all",
               {
                 "line-through":
-                  ticketItem.isUsed === TicketStatus.Used && !isDetail,
-                "line-clamp-3 ": !isDetail,
+                  ticketItem.status === ticketStatusList[1] && !isDetail,
+                "line-clamp-3": !isDetail,
               }
             )}
           >
-            {ticketItem.description +
-              ticketItem.description +
-              ticketItem.description +
-              ticketItem.description +
-              ticketItem.description +
-              ticketItem.description +
-              ticketItem.description}
+            {ticketItem.content +
+              ticketItem.content +
+              ticketItem.content +
+              ticketItem.content +
+              ticketItem.content +
+              ticketItem.content +
+              ticketItem.content}
           </p>
         </CardContent>
       </Card>
-      {!isDetail && (
-        <Button
-          asChild
-          variant="ghost"
-          className="hover:bg-transparent"
-        >
-          <Link
-            href={Paths.TicketPath(ticketItem.id + "")}
-            className="underline pl-0"
-          >
-            <LucideSquareArrowOutUpRight />
-          </Link>
-        </Button>
-      )}
+      <div className="flex flex-col gap-y-2">
+        <EditButton />
+        {isDetail ? <DeleteButton /> : <DetailButton />}
+      </div>
     </div>
   );
 }

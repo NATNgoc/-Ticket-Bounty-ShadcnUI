@@ -6,10 +6,10 @@ import Paths from "@/constants/paths";
 import { LucideTicketX } from "lucide-react";
 import Link from "next/link";
 
-export default function TicketErrorPage({ error }: { error: Error }) {
+export default function TicketNotFoundPage() {
   return (
     <PlaceHolder
-      label={error.message + "NATN"}
+      label="Ticket not found!"
       icon={<LucideTicketX></LucideTicketX>}
       button={
         <>

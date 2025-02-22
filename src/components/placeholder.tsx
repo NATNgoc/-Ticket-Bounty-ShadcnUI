@@ -3,8 +3,8 @@ import { LucideCloudAlert } from "lucide-react";
 import { cloneElement } from "react";
 type PlacerHolderProps = {
   label: string;
-  icon?: React.ReactElement<any>;
-  button?: React.ReactElement<any>;
+  icon?: React.ReactElement<{ className?: string }>;
+  button?: React.ReactElement<unknown>;
 };
 
 export default function PlaceHolder({

@@ -13,7 +13,7 @@ function Heading({ title, description }: HeadingProps): React.ReactElement {
           {description}
         </p>
       )}
-      <Separator className="mt-10" />
+      <Separator className="my-10" />
     </>
   );
 }

@@ -1,6 +1,5 @@
 import Heading from "@/components/heading";
 import Paths from "@/constants/paths";
-import { LucideKanban } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {

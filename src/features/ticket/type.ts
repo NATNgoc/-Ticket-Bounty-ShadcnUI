@@ -1,17 +1,40 @@
-export enum TicketStatus {
+import getTicket from "@/features/ticket/queries/get-ticket";
+
+export enum TicketStatus2 {
   Used = "true",
   NotUsed = "false",
 }
-export type Ticket = {
+
+// export enum TicketStatus {
+//   OPEN = "OPEN",
+//   IN_PROGRESS = "IN_PROGRESS",
+//   DONE = "DONE",
+// }
+
+export const ticketStatusList = ["OPEN", "IN_PROGRESS", "DONE"] as const;
+
+// export type TicketStatus = (typeof ticketStatusList)[number];
+export type TicketStatus = (typeof ticketStatusList)[number];
+export type Ticket2 = {
   id: number;
   movieId: number;
   startTime: Date;
   endTime: Date;
-  isUsed: TicketStatus;
+  isUsed: TicketStatus2;
   description: string;
 };
 
+export type Ticket = {
+  id: string;
+  title: string;
+  content: string;
+  status: TicketStatus;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+};
+
 export type TicketItemProps = {
-  ticketItem: Ticket;
+  ticketItem: Awaited<ReturnType<typeof getTicket>>;
   isDetail?: boolean;
 };

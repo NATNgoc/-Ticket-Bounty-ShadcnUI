@@ -1,8 +1,13 @@
-import { Ticket } from "@/features/ticket/type";
-import dataTicketSamples from "../../../../datasample";
+import { TicketsPrefix } from "../constants";
+import { Ticket } from "../type";
 
-export default async function getTicket(): Promise<Ticket[]> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+export default async function getTicket(id: string): Promise<Ticket> {
+  // console.log("getTicket id: ", id);
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  return new Promise((resolve) => resolve(dataTicketSamples));
+  const response = await fetch(`${process.env.BE_URL}/${TicketsPrefix}/${id}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch ticket");
+  }
+  return response.json();
 }

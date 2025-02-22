@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
       "media.giphy.com",
     ],
   },
+  // experimental: {
+  //   staleTimes: {
+  //     dynamic: 30,
+  //   },
+  // },
 };
 
 export default nextConfig;
