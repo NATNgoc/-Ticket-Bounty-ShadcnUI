@@ -1,5 +1,10 @@
+import { TestFrame } from "@/app/hehe/h";
+import { ParentElement } from "@/app/hehe/parent";
+
 export default function HehePage() {
   const Icon = () => {
+    console.log("Icon");
+
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -18,8 +23,10 @@ export default function HehePage() {
     );
   };
   return (
-    <div className="border-solid  border-slate-800">
-      <Icon />
+    <div className="flex-1 inline-block">
+      <ParentElement button={<Icon></Icon>}>
+        <TestFrame></TestFrame>
+      </ParentElement>
     </div>
   );
 }

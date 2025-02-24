@@ -1,10 +1,11 @@
 "use server";
 
+import { ActionState, fromErrorToActionState, fromSuccessToActionState } from "@/common/utils";
 import Paths from "@/constants/paths";
 import { TicketsPrefix, upsertZodSchema } from "@/features/ticket/constants";
 import { revalidatePath } from "next/cache";
 
-export async function createTicket(state: { message: string, payload?: FormData }, formData: FormData) {
+export async function createTicket(state: ActionState, formData: FormData): Promise<ActionState> {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
   try {
     const data = upsertZodSchema.parse({
@@ -23,12 +24,13 @@ export async function createTicket(state: { message: string, payload?: FormData 
       }),
     });
     if (!response.ok) {
-      throw new Error("Failed to create ticket");
+      const errorMessage = (await response.json() as { message: string, statuscode: number }).message
+      throw new Error(errorMessage);
     }
     revalidatePath(Paths.TicketsPath());
-    return { message: "😁 Ticket created successfully" };
+    return fromSuccessToActionState("Ticket created successfully");
   } catch (error) {
     console.error("Failed to create ticket", error);
-    return { message: "🥲 Create Ticket UnSuccessfully!!!", payload: formData };
+    return fromErrorToActionState(error, formData);
   }
 }

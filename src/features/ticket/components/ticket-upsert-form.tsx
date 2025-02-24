@@ -1,5 +1,7 @@
 "use client";
 
+import { ActionState, EMPTY_ACTION_STATE } from "@/common/utils";
+import { FieldError } from "@/components/field-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,29 +18,28 @@ import { updateTicket } from "@/features/ticket/actions/update-ticket";
 import { Ticket, ticketStatusList } from "@/features/ticket/type";
 import { LucideLoader2 } from "lucide-react";
 import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
 
 type TicketUpsertFormProps = {
   ticket?: Ticket;
 };
 
-const SubmitButton = ({ label }: { label: string }) => {
-  const { pending } = useFormStatus();
+// const SubmitButton = ({ label }: { label: string }) => {
+//   const { pending } = useFormStatus();
 
-  return (
-    <Button
-      disabled={pending}
-      className="flex flex-row"
-    >
-      {pending && (
-        <div>
-          <LucideLoader2 className="animate-spin" />
-        </div>
-      )}
-      {label}
-    </Button>
-  );
-};
+//   return (
+//     <Button
+//       disabled={pending}
+//       className="flex flex-row"
+//     >
+//       {pending && (
+//         <div>
+//           <LucideLoader2 className="animate-spin" />
+//         </div>
+//       )}
+//       {label}
+//     </Button>
+//   );
+// };
 
 export default function TicketUpsertForm(props: TicketUpsertFormProps) {
   const { ticket } = props;
@@ -47,40 +48,55 @@ export default function TicketUpsertForm(props: TicketUpsertFormProps) {
     ? updateTicket.bind(null, ticket?.id)
     : createTicket;
 
-  const [actionState, action] = useActionState<
-    { message: string; payload?: FormData },
+  const [actionState, action, isPending] = useActionState<
+    ActionState,
     FormData
-  >(serverAction, {
-    message: "",
-  });
+  >(serverAction, EMPTY_ACTION_STATE);
 
   return (
     <form action={action}>
       <div className="flex flex-col gap-y-2">
         {ticket && (
           <Input
+            disabled={isPending}
             name="id"
             defaultValue={
-              (actionState.payload?.get("title") as string) ?? ticket.id
+              (actionState.formData?.get("title") as string) ?? ticket.id
             }
             type="hidden"
           ></Input>
         )}
-        <Label htmlFor="title">Title</Label>
+        <Label
+          className="font-bold"
+          htmlFor="title"
+        >
+          Title
+        </Label>
         <Input
+          disabled={isPending}
           type="text"
           defaultValue={
-            (actionState.payload?.get("title") as string) ?? ticket?.title
+            (actionState.formData?.get("title") as string) ?? ticket?.title
           }
           id="title"
           name="title"
           placeholder="Your favorite title here💝"
         ></Input>
-        <Label htmlFor="status">Status</Label>
+        <FieldError
+          textSize="text-xs"
+          error={actionState.fieldErrors?.title?.[0] as string}
+        ></FieldError>
+        <Label
+          className="font-bold"
+          htmlFor="status"
+        >
+          Status
+        </Label>
         <Select
+          disabled={isPending}
           name="status"
           defaultValue={
-            (actionState.payload?.get("status") as string) ?? ticket?.status
+            (actionState.formData?.get("status") as string) ?? ticket?.status
           }
         >
           <SelectTrigger id="status">
@@ -97,19 +113,38 @@ export default function TicketUpsertForm(props: TicketUpsertFormProps) {
             ))}
           </SelectContent>
         </Select>
-
-        <Label htmlFor="content">Content</Label>
+        <FieldError
+          textSize="text-xs"
+          error={actionState.fieldErrors?.status?.[0] as string}
+        ></FieldError>
+        <Label
+          className="font-bold"
+          htmlFor="content"
+        >
+          Content
+        </Label>
         <Textarea
+          disabled={isPending}
           placeholder="What's ticket about?"
           id="content"
           defaultValue={
-            (actionState.payload?.get("content") as string) ?? ticket?.content
+            (actionState.formData?.get("content") as string) ?? ticket?.content
           }
           name="content"
           className="h-32 overflow-y-auto"
         ></Textarea>
-        <SubmitButton label={ticket ? "Update" : "Create"} />
-
+        <FieldError
+          textSize="text-xs"
+          error={actionState.fieldErrors?.content?.[0] as string}
+        ></FieldError>
+        {/* <SubmitButton label={ticket ? "Update" : "Create"} /> */}
+        <Button
+          disabled={isPending}
+          className="flex flex-row"
+        >
+          {isPending && <LucideLoader2 className="animate-spin" />}
+          {ticket ? "Update" : "Create"}
+        </Button>
         <div>{actionState?.message}</div>
       </div>
     </form>

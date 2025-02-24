@@ -1,12 +1,13 @@
 "use server";
 
+import { ActionState, fromErrorToActionState } from "@/common/utils";
 import Paths from "@/constants/paths";
 import { TicketsPrefix, upsertZodSchema } from "@/features/ticket/constants";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 
-export async function updateTicket(id: string, state: { message: string, payload?: FormData }, formData: FormData) {
+export async function updateTicket(id: string, state: ActionState, formData: FormData) {
 
     try {
         const data = upsertZodSchema.parse({
@@ -40,10 +41,7 @@ export async function updateTicket(id: string, state: { message: string, payload
         revalidatePath(Paths.TicketsPath());
     } catch (error) {
         console.error("Failed to update ticket", error);
-        return {
-            message: "🥲 Update Ticket UnSuccessfully!!!",
-            payload: formData
-        };
+        return fromErrorToActionState(error, formData);
     }
     redirect(Paths.TicketsPath());
 }
