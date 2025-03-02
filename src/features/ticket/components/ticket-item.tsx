@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Paths from "@/constants/paths";
 import { deleteTicket } from "@/features/ticket/actions/delete-ticket";
+import { TicketMoreMenu } from "@/features/ticket/components/ticket-more-menu";
 import { TicketItemProps, ticketStatusList } from "@/features/ticket/type";
 import clsx from "clsx";
 import {
@@ -120,6 +121,7 @@ export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
       <div className="flex flex-col gap-y-2">
         <EditButton />
         {isDetail ? <DeleteButton /> : <DetailButton />}
+        <TicketMoreMenu ticket={ticketItem}></TicketMoreMenu>
       </div>
     </div>
   );

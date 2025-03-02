@@ -1,3 +1,4 @@
+
 import { TicketsPrefix } from "../constants";
 import { Ticket } from "../type";
 
@@ -10,6 +11,11 @@ export default async function getTickets(): Promise<Ticket[]> {
   if (!response.ok) {
     throw new Error("Failed to fetch tickets");
   }
+  const tickets = await response.json() as Ticket[];
+  const filteredTickets: Ticket[] = await tickets.map(ticket => ({
+    ...ticket,
+    bounty: parseInt(ticket.bounty.toString().replace("$", "")),
+  }));
   // revalidatePath(Paths.TicketsPath());
-  return response.json();
+  return filteredTickets;
 }

@@ -1,7 +1,9 @@
 "use client";
 
 import { ActionState, EMPTY_ACTION_STATE } from "@/common/utils";
+import { DatePicker } from "@/components/date-picker";
 import { FieldError } from "@/components/field-error";
+import { Form } from "@/components/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -54,7 +56,10 @@ export default function TicketUpsertForm(props: TicketUpsertFormProps) {
   >(serverAction, EMPTY_ACTION_STATE);
 
   return (
-    <form action={action}>
+    <Form
+      action={action}
+      actionState={actionState}
+    >
       <div className="flex flex-col gap-y-2">
         {ticket && (
           <Input
@@ -138,6 +143,54 @@ export default function TicketUpsertForm(props: TicketUpsertFormProps) {
           error={actionState.fieldErrors?.content?.[0] as string}
         ></FieldError>
         {/* <SubmitButton label={ticket ? "Update" : "Create"} /> */}
+        <div
+          className="grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-2"
+          style={{
+            gridTemplateRows: "minmax(auto, auto) auto",
+          }}
+        >
+          <Label
+            htmlFor="deadline"
+            className="font-bold"
+          >
+            Date
+          </Label>
+          <Label
+            htmlFor="bounty"
+            className="font-bold"
+          >
+            Bounty
+          </Label>
+          <DatePicker
+            id="deadline"
+            name="deadline"
+            key={actionState.timeStamp}
+            defaultValue={
+              (actionState.formData?.get("deadline") as string) ??
+              ticket?.deadline
+            }
+          ></DatePicker>
+
+          <Input
+            type="number"
+            id="bounty"
+            name="bounty"
+            defaultValue={
+              parseInt(
+                (actionState.formData?.get("bounty") as string) ??
+                  ticket?.bounty
+              ) || ""
+            }
+            placeholder="Bounty"
+          />
+          <FieldError
+            error={actionState.fieldErrors?.deadline?.[0] as string}
+          ></FieldError>
+          <FieldError
+            error={actionState.fieldErrors?.bounty?.[0] as string}
+          ></FieldError>
+        </div>
+
         <Button
           disabled={isPending}
           className="flex flex-row"
@@ -145,9 +198,10 @@ export default function TicketUpsertForm(props: TicketUpsertFormProps) {
           {isPending && <LucideLoader2 className="animate-spin" />}
           {ticket ? "Update" : "Create"}
         </Button>
+
         <div>{actionState?.message}</div>
       </div>
-    </form>
+    </Form>
 
     /* <Card className="w-full max-w-[450px] self-center flex flex-col gap-y-2">
         <CardHeader>

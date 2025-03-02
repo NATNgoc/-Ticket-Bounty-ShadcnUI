@@ -8,7 +8,6 @@ export default async function TicketsList() {
   const sortedTickets = ticketsData.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
-  console.log(sortedTickets);
   return (
     <>
       {sortedTickets.length !== 0 && (

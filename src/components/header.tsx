@@ -15,7 +15,7 @@ export default function Header() {
           asChild
           size="lg"
           variant="ghost"
-          className="hover:motion-preset-expand text-lg font-semibold will-change-transform"
+          className="hover:motion-preset-expand text-lg font-semibold will-change-transform "
         >
           <Link
             href={Paths.HomePath()}

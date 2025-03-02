@@ -11,7 +11,7 @@ export enum TicketStatus2 {
 //   DONE = "DONE",
 // }
 
-export const ticketStatusList = ["OPEN", "IN_PROGRESS", "DONE"] as const;
+export const ticketStatusList: Array<string> = ["OPEN", "IN_PROGRESS", "DONE"] as const;
 
 // export type TicketStatus = (typeof ticketStatusList)[number];
 export type TicketStatus = (typeof ticketStatusList)[number];
@@ -29,6 +29,8 @@ export type Ticket = {
   title: string;
   content: string;
   status: TicketStatus;
+  bounty: number;
+  deadline: Date;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;

@@ -9,5 +9,8 @@ export default async function getTicket(id: string): Promise<Ticket> {
   if (!response.ok) {
     throw new Error("Failed to fetch ticket");
   }
-  return response.json();
+  const ticket: Ticket = await response.json() as Ticket;
+  ticket.bounty = parseInt(ticket.bounty.toString().replace("$", ""));
+  return ticket;
+
 }

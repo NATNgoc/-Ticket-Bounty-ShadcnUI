@@ -4,6 +4,8 @@ import "./globals.css";
 
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ToastCookie } from "@/components/toast-cookie";
+import { Toaster } from "@/components/ui/toast";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -44,6 +46,8 @@ export default function RootLayout({
           >
             {children}
           </main>
+          <Toaster richColors />
+          <ToastCookie></ToastCookie>
         </ThemeProvider>
       </body>
     </html>
