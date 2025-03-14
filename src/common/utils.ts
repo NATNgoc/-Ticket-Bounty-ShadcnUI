@@ -25,19 +25,20 @@ export const EMPTY_ACTION_STATE: ActionState = {
 
 export const fromErrorToActionState = (error: unknown, formData?: FormData): ActionState => {
     if (error instanceof ZodError) {
+        console.log("error", error.flatten().fieldErrors)
         return {
             timeStamp: Date.now(),
             status: "ERROR",
             message: "",
             formData: formData,
             fieldErrors: error.flatten().fieldErrors,
-
         }
     } else if (error instanceof Error) {
         return {
             timeStamp: Date.now(),
             status: "ERROR",
             message: error.message,
+            formData: formData,
         }
     } else {
         return {

@@ -2,6 +2,7 @@ import ThemeSwitcher from "@/components/theme/theme-switcher";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Paths from "@/constants/paths";
+import { Account } from "@/features/auth/components/login-status";
 
 import clsx from "clsx";
 import { LucideKanban } from "lucide-react";
@@ -34,15 +35,17 @@ export default function Header() {
           <Button
             asChild
             variant="default"
-            size="lg"
+            // size="lg"
+            className="max-w-40"
           >
             <Link
               href={Paths.TicketsPath()}
-              className="font-normal  underline text-lg motion-preset-expand"
+              className="text-lg motion-preset-expand"
             >
-              Tickets
+              <span className="font-semibold">Tickets</span>
             </Link>
           </Button>
+          <Account></Account>
         </div>
       </nav>
     </header>

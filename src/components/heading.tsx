@@ -1,5 +1,3 @@
-import { Separator } from "@/components/ui/separator";
-
 type HeadingProps = {
   title: string;
   description?: string;
@@ -13,7 +11,6 @@ function Heading({ title, description }: HeadingProps): React.ReactElement {
           {description}
         </p>
       )}
-      <Separator className="my-10" />
     </>
   );
 }

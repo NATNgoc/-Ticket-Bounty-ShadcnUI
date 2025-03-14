@@ -1,11 +1,15 @@
+import { HeaderKeys } from "@/constants";
+import { getCredentials } from "@/features/ticket/utils";
 import { TicketsPrefix } from "../constants";
 import { Ticket } from "../type";
-
 export default async function getTicket(id: string): Promise<Ticket> {
-  // console.log("getTicket id: ", id);
-  // await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  const response = await fetch(`${process.env.BE_URL}/${TicketsPrefix}/${id}`);
+  const { accessToken } = await getCredentials();
+  const response = await fetch(`${process.env.BE_URL}/${TicketsPrefix}/${id}`, {
+    headers: {
+      [HeaderKeys.AUTHORIZATION]: accessToken
+    }
+  });
   if (!response.ok) {
     throw new Error("Failed to fetch ticket");
   }

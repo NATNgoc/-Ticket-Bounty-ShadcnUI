@@ -9,7 +9,7 @@ export const TicketsPrefix = "tickets";
 export const upsertZodSchema = z.object({
     title: z.string().min(3).max(100),
     content: z.string().min(3).max(1000),
-    status: z.enum(ticketStatusList),
+    status: z.enum(ticketStatusList as [string, ...string[]]),
     deadline: z.date().min(setTimeToPreviousDay(new Date()), "Day must be greater than yesterday"),
     bounty: z.number(),
 });

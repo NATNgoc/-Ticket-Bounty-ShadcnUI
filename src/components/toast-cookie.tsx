@@ -1,12 +1,11 @@
 "use client";
 
 import { deleteCookie, getCookie } from "@/action/cookie";
-import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
 export function ToastCookie() {
-  const pathName = usePathname();
+  // const pathName = usePathname();
 
   useEffect(() => {
     const getToastMessage = async () => {
@@ -17,6 +16,6 @@ export function ToastCookie() {
       }
     };
     getToastMessage();
-  }, [pathName]);
+  });
   return <></>;
 }

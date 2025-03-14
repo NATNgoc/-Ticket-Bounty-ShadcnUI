@@ -3,43 +3,38 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Paths from "@/constants/paths";
-import { deleteTicket } from "@/features/ticket/actions/delete-ticket";
 import { TicketMoreMenu } from "@/features/ticket/components/ticket-more-menu";
 import { TicketItemProps, ticketStatusList } from "@/features/ticket/type";
 import clsx from "clsx";
 import {
   LucideBadge,
   LucideBadgeCheck,
+  LucidePencilLine,
   LucideSettings2,
   LucideSquareArrowOutUpRight,
-  LucideTrash2,
 } from "lucide-react";
 import Link from "next/link";
 
 export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
-  const DeleteButton = () => {
-    return (
-      <form action={deleteTicket.bind(null, ticketItem.id + "")}>
-        <Button
-          variant={"destructive"}
-          className="max-w-10 "
-        >
-          <LucideTrash2></LucideTrash2>
-        </Button>
-      </form>
-    );
-    // return (
-    //   <Button
-    //     asChild
-    //     variant="ghost"
-    //     className="justify-center"
-    //   >
-    //     <Link href={Paths.TicketPath(ticketItem.id + "")}>
-    //       <LucideSquareArrowOutUpRight />
-    //     </Link>
-    //   </Button>
-    // );
-  };
+  // <form action={deleteTicket.bind(null, ticketItem.id + "")}>
+  //   <Button
+  //     variant={"destructive"}
+  //     className="max-w-10 "
+  //   >
+  //     <LucideTrash2></LucideTrash2>
+  //   </Button>
+  // </form>;
+  // return (
+  //   <Button
+  //     asChild
+  //     variant="ghost"
+  //     className="justify-center"
+  //   >
+  //     <Link href={Paths.TicketPath(ticketItem.id + "")}>
+  //       <LucideSquareArrowOutUpRight />
+  //     </Link>
+  //   </Button>
+  // );
 
   const EditButton = () => {
     return (
@@ -75,6 +70,12 @@ export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
     );
   };
 
+  const StatusBadge = {
+    [ticketStatusList[2]]: <LucideBadgeCheck />,
+    [ticketStatusList[1]]: <LucidePencilLine />,
+    [ticketStatusList[0]]: <LucideBadge />,
+  };
+
   return (
     <div
       className={clsx("flex flex-row justify-center w-full gap-x-2", {
@@ -85,13 +86,7 @@ export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex flex-row gap-2 items-center">
-            <span>
-              {ticketItem.status === ticketStatusList[0] ? (
-                <LucideBadge />
-              ) : (
-                <LucideBadgeCheck />
-              )}
-            </span>
+            <span>{StatusBadge[ticketItem.status]}</span>
             <span className="text-2xl font-bold tracking-tighter line-clamp-1">
               Ticket ID: {ticketItem.id}
             </span>
@@ -100,10 +95,10 @@ export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
         <CardContent>
           <p
             className={clsx(
-              " text-gray-500 whitespace-break-spaces tracking-tighter break-all",
+              " text-gray-500 whitespace-break-spaces tracking-tighter break-all text-left",
               {
                 "line-through":
-                  ticketItem.status === ticketStatusList[1] && !isDetail,
+                  ticketItem.status === ticketStatusList[2] && !isDetail,
                 "line-clamp-3": !isDetail,
               }
             )}
@@ -116,11 +111,18 @@ export function TicketItem({ ticketItem, isDetail = false }: TicketItemProps) {
               ticketItem.content +
               ticketItem.content}
           </p>
+          <div className="flex flex-row justify-between mt-3">
+            <span>
+              <span className="text-gray-500 italic">created by</span>{" "}
+              {ticketItem.user?.name}
+            </span>
+            <span>{ticketItem.bounty}$</span>
+          </div>
         </CardContent>
       </Card>
       <div className="flex flex-col gap-y-2">
         <EditButton />
-        {isDetail ? <DeleteButton /> : <DetailButton />}
+        {!isDetail && <DetailButton />}
         <TicketMoreMenu ticket={ticketItem}></TicketMoreMenu>
       </div>
     </div>

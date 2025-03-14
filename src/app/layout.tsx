@@ -2,10 +2,14 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import { SideBar } from "@/app/_navigation/sidebar/components/side-bar";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ToastCookie } from "@/components/toast-cookie";
 import { Toaster } from "@/components/ui/toast";
+import { AuthProvider } from "@/context/auth-context";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -36,18 +40,23 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <Header></Header>
-          <main
-            className="p-10 min-h-screen
+          <AuthProvider>
+            <Header></Header>
+            <div className="grid grid-cols-[auto,1fr] grid-rows-1 content-center">
+              <SideBar></SideBar>
+              <main
+                className="min-h-screen
             overflow-y-auto overflow-x-hidden
             py-24 px-8
             bg-secondary/20
             flex flex-col"
-          >
-            {children}
-          </main>
-          <Toaster richColors />
-          <ToastCookie></ToastCookie>
+              >
+                <NuqsAdapter>{children}</NuqsAdapter>
+              </main>
+            </div>
+            <Toaster richColors />
+            <ToastCookie></ToastCookie>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

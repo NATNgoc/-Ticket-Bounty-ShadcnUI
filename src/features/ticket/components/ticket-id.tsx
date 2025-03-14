@@ -1,3 +1,4 @@
+import { TicketStatus } from "@/features/ticket/type";
 import { LucideCloudFog, LucideCloudSun, LucideSunset } from "lucide-react";
 import getTicket from "../queries/get-ticket";
 import { TicketItem } from "./ticket-item";
@@ -12,7 +13,7 @@ const imageLinks = [
   "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHI3MW1jNXQ3cXdlM3BtczgwOGF5d2xmaHJrbXNxc2thOWJ4dmhtdiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/mCbS2QCAX8Axxzujlv/giphy.gif",
 ];
 
-const IconsStatus = {
+const IconsStatus: Record<TicketStatus, React.ReactNode> = {
   OPEN: <LucideCloudSun color="#d7c823" />,
   IN_PROGRESS: <LucideCloudFog color="#38ffde" />,
   DONE: <LucideSunset color="#7c891a" />,

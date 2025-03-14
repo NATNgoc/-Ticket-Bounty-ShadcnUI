@@ -1,5 +1,5 @@
+import { User } from "@/features/auth/entities/user.entity";
 import getTicket from "@/features/ticket/queries/get-ticket";
-
 export enum TicketStatus2 {
   Used = "true",
   NotUsed = "false",
@@ -31,7 +31,9 @@ export type Ticket = {
   status: TicketStatus;
   bounty: number;
   deadline: Date;
+  user_id: string;
   createdAt: Date;
+  user?: User
   updatedAt: Date;
   deletedAt: Date;
 };

@@ -10,8 +10,8 @@ import { Separator } from "@/components/ui/separator";
 import React from "react";
 
 type CardCompactProps = {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   className?: string;
   content: React.ReactNode;
   footer?: React.ReactNode;
@@ -28,15 +28,19 @@ export default function CardCompact({
       <CardHeader>
         <CardTitle className="text-lg">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
-        <Separator
-          style={{
-            marginTop: 25,
-          }}
-        />
+        {title && (
+          <Separator
+            style={{
+              marginTop: 25,
+            }}
+          />
+        )}
       </CardHeader>
 
       <CardContent>{content}</CardContent>
-      <CardFooter>{footer}</CardFooter>
+      <CardFooter className="flex flex-row justify-center items-center">
+        {footer}
+      </CardFooter>
     </Card>
   );
 }

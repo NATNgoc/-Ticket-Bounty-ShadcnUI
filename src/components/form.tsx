@@ -8,9 +8,10 @@ type FormProps = {
   action: (formData: FormData) => void;
   children: React.ReactNode;
   actionState: ActionState;
+  className?: string;
 };
 
-export function Form({ action, children, actionState }: FormProps) {
+export function Form({ action, children, actionState, className }: FormProps) {
   const option = useMemo(() => {
     return {
       onSuccess: ({ actionState }: CallBackArgs) => {
@@ -30,5 +31,12 @@ export function Form({ action, children, actionState }: FormProps) {
     optionalAction: option,
   });
 
-  return <form action={action}>{children}</form>;
+  return (
+    <form
+      action={action}
+      className={className}
+    >
+      {children}
+    </form>
+  );
 }

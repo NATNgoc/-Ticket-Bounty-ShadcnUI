@@ -1,4 +1,4 @@
-import TicketUpdateLoading from "@/app/tickets/[ticketId]/edit/loading";
+import TicketUpdateLoading from "@/app/(authenticated)/tickets/[ticketId]/edit/loading";
 import { TicketUpdate } from "@/features/ticket/components/ticket-update";
 import { Suspense } from "react";
 
