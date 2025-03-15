@@ -7,7 +7,6 @@ type JwtPayload = {
 }
 
 export function parseJwtPayload(token: string): JwtPayload {
-    console.log(token)
     const decoded = jwtDecode(token);
     return decoded as JwtPayload;
 }

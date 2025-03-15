@@ -21,6 +21,7 @@ export default function TicketsPage({
 }: {
   searchParams: SearchParams;
 }) {
+  console.log(searchParams);
   const breadCumbList = [
     {
       title: "Home",
@@ -45,7 +46,7 @@ export default function TicketsPage({
       <Suspense fallback={<TicketsLoadingPage></TicketsLoadingPage>}>
         <TicketsList
           isOnHomePage={false}
-          queryParams={SearchParamsCache.parse(searchParams)}
+          queryParams={Promise.resolve(SearchParamsCache.parse(searchParams))}
         ></TicketsList>
       </Suspense>
     </div>

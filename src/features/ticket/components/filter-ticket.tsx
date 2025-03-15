@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  SliderHandle,
+  SliderWithShownNumber,
+} from "@/components/slider-with-number";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -10,10 +14,15 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AvailableSortFields } from "@/features/ticket/queries/get-tickets";
-import { orderParser, sortByParser } from "@/types";
+import {
+  orderParser,
+  paginationOptions,
+  paginationParsers,
+  sortByParser,
+} from "@/types";
 import { ListFilter } from "lucide-react";
-import { useQueryState } from "nuqs";
-import { Fragment, useState } from "react";
+import { useQueryState, useQueryStates } from "nuqs";
+import { Fragment, useRef, useState } from "react";
 type FilterTicketProps = {
   className?: string;
 };
@@ -22,11 +31,26 @@ export function FilterTicket({ className }: FilterTicketProps) {
   const [field, setField] = useQueryState("sortBy", sortByParser);
   const [type, setType] = useQueryState("order", orderParser);
   const [sortedField, setSortedField] = useState(field);
+  const [openFilter, setOpenFilter] = useState(false);
   const [sortedType, setSortedType] = useState(type);
+  const [paginationStatus, setPagination] = useQueryStates(
+    paginationParsers,
+    paginationOptions
+  );
+
+  const sliderRef = useRef<SliderHandle>(null);
 
   const handleInputValue = () => {
     setType(sortedType);
     setField(sortedField);
+    if (sliderRef.current) {
+      console.log("nguuu", sliderRef.current.getValue());
+      setPagination({
+        limit: sliderRef.current.getValue(),
+        offset: 0,
+      });
+    }
+    setOpenFilter(false);
   };
 
   const SortField = () => {
@@ -78,7 +102,10 @@ export function FilterTicket({ className }: FilterTicketProps) {
   };
 
   return (
-    <Popover>
+    <Popover
+      open={openFilter}
+      onOpenChange={setOpenFilter}
+    >
       <PopoverTrigger asChild>
         <Button className={className}>
           <ListFilter />
@@ -90,6 +117,12 @@ export function FilterTicket({ className }: FilterTicketProps) {
       >
         <SortField></SortField>
         <SortType></SortType>
+        <SliderWithShownNumber
+          ref={sliderRef}
+          max={30}
+          defaultValue={paginationStatus.limit}
+          step={5}
+        />
         <Button
           type="submit"
           className="flex-1 w-full max-w-[300px]"

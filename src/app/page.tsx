@@ -4,6 +4,7 @@ import { FilterTicket } from "@/features/ticket/components/filter-ticket";
 import { SearchTicket } from "@/features/ticket/components/search-ticket";
 import TicketsList from "@/features/ticket/components/ticket-list";
 import { SearchParamsCache } from "@/types";
+import { LoaderIcon } from "lucide-react";
 import { SearchParams } from "nuqs/server";
 
 import { Suspense } from "react";
@@ -30,10 +31,16 @@ export default async function Home({
           <SearchTicket className="h-10 w-full flex-1"></SearchTicket>
           <FilterTicket className="w-full h-10 max-w-[60px]"></FilterTicket>
         </div>
-        <Suspense>
+        <Suspense
+          fallback={
+            <div className="min-h-[500px] w-full h-full flex flex-col justify-center items-center">
+              <LoaderIcon className="animate-spin" />
+            </div>
+          }
+        >
           <TicketsList
             isOnHomePage={true}
-            queryParams={SearchParamsCache.parse(searchParams)}
+            queryParams={Promise.resolve(SearchParamsCache.parse(searchParams))}
           ></TicketsList>
         </Suspense>
       </div>
